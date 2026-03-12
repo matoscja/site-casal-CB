@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>A Nossa História de Amor</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:'Arial',sans-serif;
+background:#0b0f2e;
+overflow-x:hidden;
+min-height:100vh;
+}
+
+/* céu estrelado com gradiente */
+
+.stars{
+position:fixed;
+width:100%;
+height:100%;
+background:radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+animation:starsMove 80s linear infinite;
+z-index:-1;
+}
+
+.stars:after{
+content:"";
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:transparent;
+background-image: 
+radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+radial-gradient(2px 2px at 40px 70px, #fff8e7, rgba(0,0,0,0)),
+radial-gradient(2px 2px at 80px 130px, #ffe6f0, rgba(0,0,0,0)),
+radial-gradient(2px 2px at 160px 190px, #ffd9e6, rgba(0,0,0,0)),
+radial-gradient(4px 4px at 250px 250px, #ffb3c6, rgba(0,0,0,0)),
+radial-gradient(3px 3px at 350px 150px, #ffc2d1, rgba(0,0,0,0)),
+radial-gradient(2px 2px at 450px 350px, #ffe6f0, rgba(0,0,0,0)),
+radial-gradient(3px 3px at 550px 450px, #ffffff, rgba(0,0,0,0)),
+radial-gradient(2px 2px at 650px 250px, #ffd9e6, rgba(0,0,0,0)),
+radial-gradient(4px 4px at 750px 550px, #ffb3c6, rgba(0,0,0,0)),
+radial-gradient(3px 3px at 850px 150px, #ffffff, rgba(0,0,0,0)),
+radial-gradient(2px 2px at 950px 650px, #ffe6f0, rgba(0,0,0,0));
+background-repeat:repeat;
+opacity:0.5;
+animation:twinkle 4s ease-in-out infinite alternate;
+}
+
+@keyframes starsMove{
+from{background-position:0 0;}
+to{background-position:2000px 2000px;}
+}
+
+@keyframes twinkle{
+0%{opacity:0.3;}
+100%{opacity:0.8;}
+}
+
+.container{
+max-width:1200px;
+margin:auto;
+padding:20px;
+position:relative;
+z-index:1;
+}
+
+/* tela inicial */
+
+.start-screen{
+background:rgba(255, 255, 255, 0.1);
+backdrop-filter:blur(10px);
+border:2px solid rgba(255, 255, 255, 0.2);
+padding:3rem;
+border-radius:20px;
+text-align:center;
+box-shadow:0 20px 60px rgba(0,0,0,0.5);
+margin-top:80px;
+color:white;
+}
+
+.start-screen h1{
+font-size:2.5rem;
+text-shadow:0 0 20px rgba(255,182,193,0.8);
+background:linear-gradient(45deg, #FFB6C1, #FFD700);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.start-btn{
+background:linear-gradient(45deg,#FF69B4,#FF1493);
+color:white;
+border:none;
+padding:1.2rem 3rem;
+font-size:1.3rem;
+border-radius:50px;
+cursor:pointer;
+box-shadow:0 0 30px rgba(255,20,147,0.5);
+transition:0.3s;
+font-weight:bold;
+letter-spacing:1px;
+}
+
+.start-btn:hover{
+transform:scale(1.1);
+box-shadow:0 0 50px rgba(255,20,147,0.8);
+}
+
+/* capítulos */
+
+.capitulo{
+background:rgba(255, 255, 255, 0.1);
+backdrop-filter:blur(10px);
+border:1px solid rgba(255, 255, 255, 0.2);
+border-radius:20px;
+padding:30px;
+margin:40px 0;
+box-shadow:0 10px 30px rgba(0,0,0,0.3);
+opacity:0;
+transform:translateY(40px);
+transition:all 1s;
+color:white;
+}
+
+.capitulo.visible{
+opacity:1;
+transform:translateY(0);
+}
+
+.capitulo h2{
+text-align:center;
+font-size:2rem;
+margin-bottom:10px;
+background:linear-gradient(45deg, #FFD700, #FFB6C1);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.data{
+text-align:center;
+color:#FFD700;
+margin-bottom:20px;
+font-weight:bold;
+font-size:1.2rem;
+text-shadow:0 0 10px rgba(255,215,0,0.5);
+}
+
+.historia{
+text-align:center;
+line-height:1.8;
+margin-bottom:30px;
+white-space:pre-line;
+font-size:1.1rem;
+color:rgba(255,255,255,0.9);
+}
+
+/* GALERIA */
+
+.galeria{
+display:flex;
+flex-wrap:wrap;
+gap:15px;
+justify-content:center;
+}
+
+.galeria img{
+flex:1 1 auto;
+min-width:180px;
+max-width:220px;
+height:200px;
+object-fit:cover;
+border-radius:10px;
+cursor:pointer;
+transition:0.3s;
+box-shadow:0 5px 15px rgba(0,0,0,0.5);
+border:2px solid rgba(255,255,255,0.1);
+}
+
+.galeria img:hover{
+transform:scale(1.05);
+border-color:#FFD700;
+box-shadow:0 0 30px rgba(255,215,0,0.3);
+}
+
+@media (max-width: 600px) {
+    .galeria img {
+        min-width: 140px;
+        height: 160px;
+    }
+}
+
+.galeria::after {
+    content: "";
+    flex: auto;
+}
+
+/* CONTADOR COMPLETO */
+
+.contador-completo {
+    background: linear-gradient(135deg, rgba(255,105,180,0.2), rgba(255,20,147,0.3));
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    border-radius: 30px;
+    padding: 2rem;
+    margin: 40px 0;
+    text-align: center;
+    box-shadow: 0 0 50px rgba(255,20,147,0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.contador-completo::before {
+    content: "💖";
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 20px;
+    opacity: 0.3;
+    animation: girar 10s linear infinite;
+}
+
+.contador-completo::after {
+    content: "💕";
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    font-size: 20px;
+    opacity: 0.3;
+    animation: girar 10s linear infinite reverse;
+}
+
+@keyframes girar {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.titulo-contador {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    background: linear-gradient(45deg, #FFD700, #FF69B4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 20px rgba(255,215,0,0.5);
+}
+
+.tempo-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.tempo-bloco {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 20px;
+    min-width: 120px;
+    flex: 1;
+    max-width: 180px;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    transition: 0.3s;
+}
+
+.tempo-bloco:hover {
+    transform: translateY(-5px);
+    border-color: #FFD700;
+    box-shadow: 0 10px 30px rgba(255,215,0,0.3);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.tempo-valor {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #FFD700;
+    text-shadow: 0 0 20px rgba(255,215,0,0.5);
+    line-height: 1;
+}
+
+.tempo-label {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.8);
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.segundos {
+    color: #FF69B4;
+    text-shadow: 0 0 20px rgba(255,105,180,0.5);
+}
+
+.data-inicio {
+    margin-top: 20px;
+    color: rgba(255,255,255,0.6);
+    font-size: 1.1rem;
+    border-top: 1px solid rgba(255,215,0,0.3);
+    padding-top: 20px;
+}
+
+/* carta */
+
+.carta-btn{
+background:linear-gradient(45deg,#FF69B4,#FF1493);
+color:white;
+border:none;
+padding:1rem 2.5rem;
+font-size:1.2rem;
+border-radius:40px;
+cursor:pointer;
+margin:30px auto;
+display:block;
+box-shadow:0 0 30px rgba(255,20,147,0.5);
+transition:0.3s;
+font-weight:bold;
+}
+
+.carta-btn:hover{
+transform:scale(1.05);
+box-shadow:0 0 50px rgba(255,20,147,0.8);
+}
+
+.carta{
+background:rgba(255, 255, 255, 0.15);
+backdrop-filter:blur(10px);
+border:1px solid rgba(255, 255, 255, 0.2);
+padding:2rem;
+border-radius:20px;
+margin:20px 0;
+display:none;
+animation:abrirCarta 1s;
+color:white;
+}
+
+.carta.show{
+display:block;
+}
+
+.carta p{
+text-align:center;
+line-height:1.8;
+white-space:pre-line;
+font-size:1.1rem;
+}
+
+@keyframes abrirCarta{
+from{transform:scale(0.7) rotate(-5deg);opacity:0;}
+to{transform:scale(1) rotate(0);opacity:1;}
+}
+
+/* Elementos caindo - APENAS STITCH E CORAÇÕES */
+.heart, .stitch {
+    position: fixed;
+    top: -50px;
+    pointer-events: none;
+    z-index: 999;
+    will-change: transform;
+}
+
+.heart{
+font-size:20px;
+animation:fall 6s linear forwards;
+filter:drop-shadow(0 0 10px rgba(255,105,180,0.8));
+}
+
+.stitch{
+width:40px;
+animation:fall 8s linear forwards;
+filter:drop-shadow(0 0 10px rgba(255,255,255,0.5));
+}
+
+@keyframes fall{
+0%{transform:translateY(-50px) rotate(0deg);}
+100%{transform:translateY(110vh) rotate(360deg);}
+}
+
+/* fogos */
+
+.firework{
+position:fixed;
+width:4px;
+height:4px;
+background:white;
+border-radius:50%;
+animation:explode 1s ease-out forwards;
+box-shadow:0 0 20px currentColor;
+}
+
+@keyframes explode{
+0%{transform:scale(1);opacity:1;}
+100%{transform:scale(30);opacity:0;}
+}
+
+/* modal */
+
+#modal{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.95);
+backdrop-filter:blur(10px);
+justify-content:center;
+align-items:center;
+z-index:1000;
+}
+
+#modal img{
+max-width:90%;
+max-height:90%;
+border-radius:10px;
+border:3px solid rgba(255,215,0,0.3);
+}
+
+/* versículo */
+
+.versiculo{
+text-align:center;
+color:rgba(255,255,255,0.6);
+font-style:italic;
+margin-top:20px;
+font-size:0.9rem;
+border-top:1px solid rgba(255,255,255,0.1);
+padding-top:20px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="stars"></div>
+
+<div class="container">
+
+<div class="start-screen" id="startScreen">
+
+<h1>💕 A Nossa História de Amor 💕</h1>
+<br>
+
+<button class="start-btn" id="startBtn">
+Clique para começar
+</button>
+
+</div>
+
+
+<div class="main-content" id="mainContent">
+
+<audio id="musica" loop>
+<source src="musica.mp3">
+</audio>
+
+
+<div class="capitulo" id="cap1">
+
+<h2>💞 Capítulo 1: O Namoro</h2>
+
+<div class="data">28 de julho de 2021</div>
+
+<div class="historia">
+Cada dia ao seu lado virou um capítulo especial, cheio de sorrisos, 
+aprendizados e momentos que guardo com muito amor no coração. 
+Você chegou e transformou minha vida de uma forma que eu nunca imaginei.
+
+Que a nossa história continue sendo escrita com respeito, cuidado, amizade e muito amor. 
+Porque, desde aquele dia, eu tive certeza de que caminhar ao seu lado é uma das melhores escolhas que já fiz.
+</div>
+
+<div class="galeria" id="galeria1"></div>
+
+</div>
+
+
+<div class="capitulo" id="cap2">
+
+<h2>💍 Capítulo 2: O Noivado</h2>
+
+<div class="data">17 de novembro de 2023</div>
+
+<div class="historia">
+Hoje, olhando para trás, lembro desse momento com muito carinho, porque ele foi parte do caminho que nos trouxe até o nosso casamento. 
+Um capítulo lindo da nossa história de amor. ❤️✨
+</div>
+
+<div class="galeria" id="galeria2"></div>
+
+</div>
+
+
+<div class="capitulo" id="cap3">
+
+<h2>👰🤵 Capítulo 3: O Casamento</h2>
+
+<div class="data">15 de março de 2024</div>
+
+<div class="historia">
+O dia mais feliz das nossas vidas. 💍
+
+Foi nesse dia que dissemos “sim” diante de Deus e das pessoas que amamos, 
+prometendo caminhar juntos por toda a vida. Um dia cheio de emoção, amor e sonhos se tornando realidade.
+
+Nosso casamento marcou o começo de uma nova etapa, onde dois caminhos se uniram para sempre em uma só história. 
+Um momento que ficará guardado para sempre no nosso coração. ❤️✨</div>
+
+<div class="galeria" id="galeria3"></div>
+
+</div>
+
+
+<div class="capitulo" id="cap4">
+
+<h2>✈️ Capítulo 4: Viagens</h2>
+
+<div class="historia">
+Cada viagem que fizemos juntos se transformou em uma memória inesquecível.
+
+Entre estradas, paisagens e novos lugares, fomos descobrindo o mundo lado a lado.
+Mas, mais do que conhecer lugares, aprendemos a conhecer ainda mais um ao outro.
+
+Cada destino trouxe risadas, aventuras e momentos que ficarão guardados
+para sempre no nosso coração.
+
+Porque no fim, não importa o lugar… 
+o melhor destino sempre foi estar ao seu lado. ✈️❤️
+</div>
+
+<div class="galeria" id="galeria4"></div>
+
+</div>
+
+
+<button class="carta-btn" id="cartaBtn">
+💌 Ler carta de amor
+</button>
+
+
+<div class="carta" id="carta">
+
+<p>
+"Até aqui nos ajudou o Senhor" (1 Samuel 7:12)
+
+Esse site é apenas um pequeno resumo
+de tudo que vivemos juntos.
+
+Obrigado por cada sorriso,
+cada abraço e cada momento.
+
+Nossa história ainda está sendo escrita.
+
+💖 Com amor,
+seu marido
+</p>
+
+</div>
+
+
+<!-- CONTADOR COMPLETO -->
+<div class="contador-completo" id="contadorCompleto">
+    <div class="titulo-contador">
+        💕 Tempo de Amor 💕
+    </div>
+    
+    <div class="tempo-container" id="tempoContainer">
+        <div class="tempo-bloco">
+            <div class="tempo-valor" id="anos">0</div>
+            <div class="tempo-label">Anos</div>
+        </div>
+        <div class="tempo-bloco">
+            <div class="tempo-valor" id="meses">0</div>
+            <div class="tempo-label">Meses</div>
+        </div>
+        <div class="tempo-bloco">
+            <div class="tempo-valor" id="dias">0</div>
+            <div class="tempo-label">Dias</div>
+        </div>
+        <div class="tempo-bloco">
+            <div class="tempo-valor" id="horas">0</div>
+            <div class="tempo-label">Horas</div>
+        </div>
+        <div class="tempo-bloco">
+            <div class="tempo-valor" id="minutos">0</div>
+            <div class="tempo-label">Minutos</div>
+        </div>
+        <div class="tempo-bloco">
+            <div class="tempo-valor segundos" id="segundos">0</div>
+            <div class="tempo-label">Segundos</div>
+        </div>
+    </div>
+    
+    <div class="data-inicio">
+        Desde 28 de julho de 2021 💖
+    </div>
+</div>
+
+
+<div class="versiculo">
+"O amor é paciente, o amor é bondoso..." - 1 Coríntios 13
+</div>
+
+</div>
+
+</div>
+
+
+<div id="modal" onclick="this.style.display='none'">
+<img id="modal-img">
+</div>
+
+
+<script>
+
+/* Configuração das fotos */
+const configFotos = {
+    galeria1: { inicio: 1, fim: 10 },      // Namoro: fotos 1 a 10
+    galeria2: { inicio: 11, fim: 15 },     // Noivado: fotos 11 a 15
+    galeria3: { inicio: 16, fim: 25 },     // Casamento: fotos 16 a 25
+    galeria4: { inicio: 26, fim: 40 }      // Viagens: fotos 26 a 40
+};
+
+/* Data de início */
+const DATA_INICIO = new Date("2021-07-28T00:00:00");
+
+/* start */
+
+const startBtn=document.getElementById("startBtn")
+const startScreen=document.getElementById("startScreen")
+const mainContent=document.getElementById("mainContent")
+const musica=document.getElementById("musica")
+
+startBtn.onclick=function(){
+musica.play().catch(()=>{})
+startScreen.style.display="none"
+mainContent.classList.add("active")
+
+document.querySelectorAll(".capitulo").forEach((c,i)=>{
+setTimeout(()=>c.classList.add("visible"),800*i)
+})
+
+fogos()
+iniciarElementosFlutuantes()
+}
+
+/* fogos coloridos */
+function fogos(){
+const cores = ['#FF69B4', '#FF1493', '#FFD700', '#FF4500', '#9400D3', '#00BFFF'];
+
+for(let i=0;i<30;i++){
+let f=document.createElement("div")
+f.className="firework"
+let cor = cores[Math.floor(Math.random() * cores.length)];
+f.style.backgroundColor = cor;
+f.style.boxShadow = `0 0 20px ${cor}`;
+f.style.left=Math.random()*100+"vw"
+f.style.top=Math.random()*60+"vh"
+document.body.appendChild(f)
+setTimeout(()=>f.remove(),1000)
+}
+}
+
+/* Inicia apenas Stitch e corações */
+function iniciarElementosFlutuantes() {
+    // Corações
+    setInterval(()=>{
+        let h=document.createElement("div")
+        h.className="heart"
+        h.innerHTML="💖"
+        h.style.left=Math.random()*100+"vw"
+        h.style.animationDuration=(Math.random()*3+3)+"s"
+        h.style.fontSize=(Math.random()*20+15)+"px"
+        document.body.appendChild(h)
+        setTimeout(()=>h.remove(),6000)
+    },500)
+
+    // Stitch
+    setInterval(()=>{
+        let s=document.createElement("img")
+        s.src="stitch.png"
+        s.className="stitch"
+        s.style.left=Math.random()*100+"vw"
+        s.style.width=Math.random()*30+25+"px"
+        s.style.animationDuration=(Math.random()*5+5)+"s"
+        document.body.appendChild(s)
+        setTimeout(()=>s.remove(),10000)
+    },1500)
+}
+
+/* Funções das fotos */
+function carregarFotos(galeriaId, inicio, fim) {
+    const galeria = document.getElementById(galeriaId);
+    if (!galeria) return;
+    
+    galeria.innerHTML = '';
+    
+    for (let i = inicio; i <= fim; i++) {
+        const img = document.createElement("img");
+        img.src = "fotos/" + i + ".jpg";
+        img.alt = "Foto " + i;
+        
+        img.onerror = function() {
+            this.style.display = 'none';
+            reorganizarGaleria(galeria);
+        };
+        
+        img.onclick = function() {
+            document.getElementById("modal").style.display = "flex";
+            document.getElementById("modal-img").src = this.src;
+        };
+        
+        galeria.appendChild(img);
+    }
+    
+    setTimeout(() => reorganizarGaleria(galeria), 100);
+}
+
+function reorganizarGaleria(galeria) {
+    const imagens = galeria.querySelectorAll('img');
+    const imagensVisiveis = Array.from(imagens).filter(img => img.style.display !== 'none');
+    
+    if (imagensVisiveis.length === 0) return;
+    
+    imagens.forEach(img => img.remove());
+    
+    imagensVisiveis.forEach((img, index) => {
+        galeria.appendChild(img);
+        
+        if (imagensVisiveis.length === 1) {
+            img.style.maxWidth = '100%';
+            img.style.flex = '0 0 100%';
+        } else if (imagensVisiveis.length === 2) {
+            img.style.maxWidth = 'calc(50% - 7.5px)';
+            img.style.flex = '0 0 calc(50% - 7.5px)';
+        } else {
+            img.style.maxWidth = '220px';
+            img.style.flex = '1 1 auto';
+        }
+    });
+}
+
+function carregarTodasFotos() {
+    for (let galeriaId in configFotos) {
+        const config = configFotos[galeriaId];
+        carregarFotos(galeriaId, config.inicio, config.fim);
+    }
+}
+
+carregarTodasFotos();
+
+/* carta */
+const cartaBtn=document.getElementById("cartaBtn")
+const carta=document.getElementById("carta")
+
+cartaBtn.onclick=function(){
+carta.classList.toggle("show")
+}
+
+/* CONTADOR COMPLETO */
+function atualizarContadorCompleto() {
+    const agora = new Date();
+    
+    // Diferença em milissegundos
+    const diffMs = agora - DATA_INICIO;
+    
+    // Cálculos precisos
+    const segundos = Math.floor(diffMs / 1000);
+    const minutos = Math.floor(segundos / 60);
+    const horas = Math.floor(minutos / 60);
+    const dias = Math.floor(horas / 24);
+    
+    // Valores atuais
+    const segundosAtuais = segundos % 60;
+    const minutosAtuais = minutos % 60;
+    const horasAtuais = horas % 24;
+    
+    // Cálculo de anos e meses considerando anos bissextos
+    let anos = agora.getFullYear() - DATA_INICIO.getFullYear();
+    let meses = agora.getMonth() - DATA_INICIO.getMonth();
+    let diasAjustados = dias;
+    
+    // Ajuste para meses negativos
+    if (meses < 0) {
+        anos--;
+        meses += 12;
+    }
+    
+    // Ajuste fino para dias considerando o dia do mês
+    const dataInicioAjustada = new Date(DATA_INICIO);
+    dataInicioAjustada.setFullYear(agora.getFullYear(), agora.getMonth(), DATA_INICIO.getDate());
+    
+    if (agora < dataInicioAjustada) {
+        meses--;
+        if (meses < 0) {
+            meses = 11;
+            anos--;
+        }
+        // Recalcula dias
+        const ultimoMes = new Date(agora.getFullYear(), agora.getMonth(), 0);
+        diasAjustados = ultimoMes.getDate() - DATA_INICIO.getDate() + agora.getDate();
+    } else {
+        diasAjustados = Math.floor((agora - dataInicioAjustada) / (1000 * 60 * 60 * 24));
+    }
+    
+    // Atualiza os elementos HTML
+    document.getElementById('anos').textContent = anos;
+    document.getElementById('meses').textContent = meses;
+    document.getElementById('dias').textContent = diasAjustados;
+    document.getElementById('horas').textContent = horasAtuais.toString().padStart(2, '0');
+    document.getElementById('minutos').textContent = minutosAtuais.toString().padStart(2, '0');
+    document.getElementById('segundos').textContent = segundosAtuais.toString().padStart(2, '0');
+}
+
+// Inicia o contador
+setInterval(atualizarContadorCompleto, 1000);
+
+/* reorganizar ao redimensionar */
+window.addEventListener('resize', () => {
+    for (let galeriaId in configFotos) {
+        const galeria = document.getElementById(galeriaId);
+        if (galeria) {
+            reorganizarGaleria(galeria);
+        }
+    }
+});
+
+</script>
+
+</body>
+</html>
